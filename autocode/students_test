@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -24,6 +25,29 @@ func init() {
 
 var people People
 var matrix *Matrix
+
+func MockPeople() People {
+	return People{
+		Person{
+			firstName: "testFirstName1",
+			lastName:  "testLastName1",
+			birthDay: time.Date(
+				2008, 11, 17, 20, 34, 58, 651387237, time.UTC),
+		},
+		Person{
+			firstName: "testFirstName2",
+			lastName:  "testLastName2",
+			birthDay: time.Date(
+				2010, 11, 17, 20, 34, 58, 651387237, time.UTC),
+		},
+		Person{
+			firstName: "testFirstName3",
+			lastName:  "testLastName3",
+			birthDay: time.Date(
+				2009, 11, 17, 20, 34, 58, 651387237, time.UTC),
+		},
+	}
+}
 
 func TestMain(m *testing.M) {
 	// Part 1 preparations
