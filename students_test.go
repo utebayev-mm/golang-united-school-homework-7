@@ -1,9 +1,9 @@
 package coverage
 
 import (
+	"log"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -22,37 +22,22 @@ func init() {
 
 // WRITE YOUR CODE BELOW
 
-func MockPeople() People {
-	return People{
-		Person{
-			firstName: "testFirstName1",
-			lastName:  "testLastName1",
-			birthDay: time.Date(
-				2008, 11, 17, 20, 34, 58, 651387237, time.UTC),
-		},
-		Person{
-			firstName: "testFirstName2",
-			lastName:  "testLastName2",
-			birthDay: time.Date(
-				2010, 11, 17, 20, 34, 58, 651387237, time.UTC),
-		},
-		Person{
-			firstName: "testFirstName3",
-			lastName:  "testLastName3",
-			birthDay: time.Date(
-				2009, 11, 17, 20, 34, 58, 651387237, time.UTC),
-		},
-	}
+var people People
+
+func TestMain(m *testing.M) {
+	people = MockPeople()
+	code := m.Run()
+	os.Exit(code)
 }
 
 func TestLen(t *testing.T) {
-	people := MockPeople()
+	log.Println("TestLen is running")
 	len := people.Len()
 	require.Equal(t, 3, len)
 }
 
 func TestLess(t *testing.T) {
-	people := MockPeople()
+	log.Println("TestLess is running")
 	result1 := people.Less(0, 1)
 	assert.Equal(t, false, result1)
 	result2 := people.Less(1, 2)
@@ -60,7 +45,7 @@ func TestLess(t *testing.T) {
 }
 
 func TestSwap(t *testing.T) {
-	people := MockPeople()
+	log.Println("TestSwap is running")
 	person1 := people[0]
 	people.Swap(0, 1)
 	require.Equal(t, person1, people[1])
