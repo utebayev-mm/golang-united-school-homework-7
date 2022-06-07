@@ -80,3 +80,17 @@ func TestSet(t *testing.T) {
 
 	require.Equal(t, matrix.data[row*matrix.cols+col], value)
 }
+
+func TestRows(t *testing.T) {
+	rows := matrix.Rows()
+	log.Println(rows)
+
+	require.Equal(t, len(rows), 3)
+}
+
+func TestCols(t *testing.T) {
+	cols := matrix.Cols()
+	log.Println(cols)
+
+	require.Equal(t, len(cols), 10)
+}
