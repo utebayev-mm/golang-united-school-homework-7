@@ -27,7 +27,7 @@ func init() {
 
 var people People
 var matrix *Matrix
-var matrix2 *Matrix
+var matrixFail *Matrix
 
 func MockPeople() People {
 	return People{
@@ -46,6 +46,18 @@ func MockPeople() People {
 		Person{
 			firstName: "testFirstName3",
 			lastName:  "testLastName3",
+			birthDay: time.Date(
+				2009, 11, 17, 20, 34, 58, 651387237, time.UTC),
+		},
+		Person{
+			firstName: "testFirstName3",
+			lastName:  "testLastName4",
+			birthDay: time.Date(
+				2009, 11, 17, 20, 34, 58, 651387237, time.UTC),
+		},
+		Person{
+			firstName: "testFirstName3",
+			lastName:  "testLastName4",
 			birthDay: time.Date(
 				2009, 11, 17, 20, 34, 58, 651387237, time.UTC),
 		},
@@ -71,15 +83,19 @@ func TestMain(m *testing.M) {
 func TestLen(t *testing.T) {
 	log.Println("TestLen is running")
 	len := people.Len()
-	require.Equal(t, 3, len)
+	require.Equal(t, 5, len)
 }
 
 func TestLess(t *testing.T) {
 	log.Println("TestLess is running")
-	result1 := people.Less(0, 1)
-	assert.Equal(t, false, result1)
-	result2 := people.Less(1, 2)
-	assert.Equal(t, true, result2)
+	result := people.Less(0, 1)
+	assert.Equal(t, false, result)
+	result = people.Less(1, 2)
+	assert.Equal(t, true, result)
+	result = people.Less(2, 3)
+	assert.Equal(t, true, result)
+	result = people.Less(3, 4)
+	assert.Equal(t, false, result)
 }
 
 func TestSwap(t *testing.T) {
@@ -102,7 +118,7 @@ func TestNewRowLength(t *testing.T) {
 	log.Println("TestRowLength is running")
 	var err error
 	mockString := "1 2 3 4 5 6 7 8 9 10 \n 11 12 13 14 15 16 17 18 19 20 \n 21 22 23 24 25 26 27 28 29"
-	matrix2, err = New(mockString)
+	matrixFail, err = New(mockString)
 	if err != nil {
 		log.Println(err)
 	}
@@ -113,7 +129,7 @@ func TestNewRowAtoi(t *testing.T) {
 	log.Println("TestRowAtoi is running")
 	var err error
 	mockString := "a b c 4 5 6 7 8 9 10 \n 11 12 13 14 15 16 17 18 19 20 \n 21 22 23 24 25 26 27 28 29"
-	matrix2, err = New(mockString)
+	matrixFail, err = New(mockString)
 	if err != nil {
 		log.Println(err)
 	}
