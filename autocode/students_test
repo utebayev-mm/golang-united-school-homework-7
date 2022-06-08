@@ -1,8 +1,10 @@
 package coverage
 
 import (
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"testing"
 	"time"
 
@@ -25,6 +27,7 @@ func init() {
 
 var people People
 var matrix *Matrix
+var matrix2 *Matrix
 
 func MockPeople() People {
 	return People{
@@ -87,14 +90,39 @@ func TestSwap(t *testing.T) {
 }
 
 func TestNew(t *testing.T) {
+	log.Println("TestNew is running")
 	mockStringData := []int([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30})
-
 	require.Equal(t, mockStringData, matrix.data)
 	require.Equal(t, 10, matrix.cols)
 	require.Equal(t, 3, matrix.rows)
+
+}
+
+func TestNewRowLength(t *testing.T) {
+	log.Println("TestRowLength is running")
+	var err error
+	mockString := "1 2 3 4 5 6 7 8 9 10 \n 11 12 13 14 15 16 17 18 19 20 \n 21 22 23 24 25 26 27 28 29"
+	matrix2, err = New(mockString)
+	if err != nil {
+		log.Println(err)
+	}
+	require.Equal(t, err, fmt.Errorf("Rows need to be the same length"))
+}
+
+func TestNewRowAtoi(t *testing.T) {
+	log.Println("TestRowAtoi is running")
+	var err error
+	mockString := "a b c 4 5 6 7 8 9 10 \n 11 12 13 14 15 16 17 18 19 20 \n 21 22 23 24 25 26 27 28 29"
+	matrix2, err = New(mockString)
+	if err != nil {
+		log.Println(err)
+	}
+	_, errAtoi := strconv.Atoi("a")
+	require.Equal(t, err, errAtoi)
 }
 
 func TestSet(t *testing.T) {
+	log.Println("TestSet is running")
 	row := 0
 	col := 0
 	value := 99
@@ -105,7 +133,20 @@ func TestSet(t *testing.T) {
 	require.Equal(t, matrix.data[row*matrix.cols+col], value)
 }
 
+func TestSetWrongNumber(t *testing.T) {
+	log.Println("TestSetWrongNumber is running")
+	row := -1
+	col := -1
+	value := 99
+	result := matrix.Set(row, col, value)
+
+	log.Println(matrix.data)
+
+	require.Equal(t, false, result)
+}
+
 func TestRows(t *testing.T) {
+	log.Println("TestRows is running")
 	rows := matrix.Rows()
 	log.Println(rows)
 
@@ -113,6 +154,7 @@ func TestRows(t *testing.T) {
 }
 
 func TestCols(t *testing.T) {
+	log.Println("TestCols is running")
 	cols := matrix.Cols()
 	log.Println(cols)
 
