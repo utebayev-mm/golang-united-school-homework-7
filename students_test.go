@@ -55,6 +55,12 @@ func MockPeople() People {
 			birthDay: time.Date(
 				2009, 11, 17, 20, 34, 58, 651387237, time.UTC),
 		},
+		Person{
+			firstName: "testFirstName",
+			lastName:  "testLastName4",
+			birthDay: time.Date(
+				2009, 11, 17, 20, 34, 58, 651387237, time.UTC),
+		},
 	}
 }
 
@@ -77,7 +83,7 @@ func TestMain(m *testing.M) {
 func TestLen(t *testing.T) {
 	log.Println("TestLen is running")
 	len := people.Len()
-	require.Equal(t, 4, len)
+	require.Equal(t, 5, len)
 }
 
 func TestLess(t *testing.T) {
@@ -88,6 +94,8 @@ func TestLess(t *testing.T) {
 	assert.Equal(t, true, result)
 	result = people.Less(2, 3)
 	assert.Equal(t, true, result)
+	result = people.Less(3, 4)
+	assert.Equal(t, false, result)
 }
 
 func TestSwap(t *testing.T) {
